@@ -109,12 +109,12 @@ int get_re_hash(int num)
 int split(long long num, int index)
 {
     long long base = 0xf << (index * BASE_BIT);
-    printf("%d. base = 0x%x\n", index, base);
+    //printf("%d. base = 0x%x\n", index, base);
     
     return ((num&base) >> (index*4));
 }
 
-/* work out how many 1 in number */
+/* solution 1 */
 int calc(long long num)
 {
     int i = 0;
@@ -132,15 +132,30 @@ int calc(long long num)
     return (re);
 }
 
+/* solution 2 */
+/* the lowest BIT 1 will be removed by each loop */
+int calc_using_math(long long num)
+{
+    int cnt = 0;
+    while(num)
+    {
+        num &= num - 1;
+        cnt ++;
+    }
+
+    return cnt;
+}
+
 int main()
 {
     srand((unsigned)time(NULL));
-    
+
     long long num = rand() % 8589934592;  //2^33
     printf("num = %ld\n", num);
     printf("num = 0x%x\n", num);
     
     int re = calc(num);
+    //int re = calc_using_math(num);
     printf("re = %d\n", re);
     
     return 0;
